@@ -22,7 +22,7 @@ public class ItemControle {
         this.itemServico = itemServico;
     }
 
-    @PostMapping("/cadastar_item")
+    @PostMapping("/cadastrar_item")
     public Item cadastarItem(@RequestBody Item item) {
         return itemServico.cadastarItem(item);
     }

@@ -27,9 +27,12 @@ public class Pedido {
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(orphanRemoval=true)
+    @JoinColumn(name="id_item")
     private List<Item> itensPedidos;
 
     @Column(nullable=false, length=1)
     private char statusPedido;
+    
+   
 }
