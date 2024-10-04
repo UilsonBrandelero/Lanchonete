@@ -13,7 +13,7 @@ import lombok.Data;
 public class Item {
 
     @Id
-    
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,9 +23,10 @@ public class Item {
     @Column(nullable = false)
     private double preco;
 
-    @Column(nullable = false)
-    private int quantidadeEstoque;
 
-    private int quantidadePedida;
+    @Column(nullable=false)
+    private int quantidadeEstoque;
+    
+    
 
 }

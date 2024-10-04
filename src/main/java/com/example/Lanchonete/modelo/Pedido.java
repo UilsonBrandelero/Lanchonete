@@ -16,6 +16,7 @@ import lombok.Data;
 
 @Entity
 @Data
+
 @JsonIgnoreProperties({"itensPedidos"})
 public class Pedido {
 
@@ -27,12 +28,13 @@ public class Pedido {
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    @OneToMany(orphanRemoval=true)
-    @JoinColumn(name="id_item")
+    @OneToMany(orphanRemoval = true)
+    @JoinColumn(name = "id_item")
     private List<Item> itensPedidos;
 
-    @Column(nullable=false, length=1)
+    @Column(nullable = false, length = 1)
     private char statusPedido;
-    
-   
+
+    private List<Integer> qunatidadeItens;
+
 }

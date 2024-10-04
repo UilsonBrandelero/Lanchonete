@@ -1,5 +1,8 @@
 package com.example.Lanchonete.controle;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +19,10 @@ public class PedidoControle {
         this.pedidoServico = pedidoServico;
     }
     
-    public Pedido realizarPedido(@RequestParam Long idItem, @RequestParam Long idCliete, @RequestParam int quantidadePedida){
+    @PostMapping
+    public Pedido realizarPedido(@RequestParam List<Long> idItens, @RequestParam Long idCliete, @RequestParam int quantidadePedida){
+       
         return null;
+        
     }
 }

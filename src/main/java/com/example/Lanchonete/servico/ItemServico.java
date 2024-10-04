@@ -28,9 +28,9 @@ public class ItemServico {
         itemRepositorio.delete(item);
         return item;
     }
-    public int buscaQuantidadeDisponivel(Long id){
-        Item item = itemRepositorio.findById(id).get();
-        int quantidadeDisponivel = item.getQuantidadeEstoque();
-        return quantidadeDisponivel;
-    }
+    // public int buscaQuantidadeDisponivel(Long id){
+    //     Item item = itemRepositorio.findById(id).get();
+    //     int quantidadeDisponivel = item.getQuantidadeEstoque();
+    //     return quantidadeDisponivel;
+    // }
 }

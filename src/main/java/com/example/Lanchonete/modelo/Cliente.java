@@ -2,7 +2,6 @@ package com.example.Lanchonete.modelo;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -17,18 +16,15 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties({"pedidos"})
 public class Cliente {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    
     @Column(nullable = false, length = 100)
     private String nome;
 
-    @OneToMany(mappedBy= "cliente")
-    @JsonBackReference
+    @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos;
-
 
 }
