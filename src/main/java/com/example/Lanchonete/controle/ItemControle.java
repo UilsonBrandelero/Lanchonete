@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,9 +33,17 @@ public class ItemControle {
     public List<Item> listarItens() {
         return itemServico.listarItens();
     }
+    @GetMapping("/buscar_item_por_id/{id}")
+public Item buscarItemPorId(@PathVariable Long id){
+    return itemServico.buscarItemPorId(id);
+}
+@PutMapping("/editar_item/{id}")
+public Item editarItem(@RequestBody Item item, @PathVariable Long id){
+    return itemServico.editarItem(item, id);
+}
 
     @DeleteMapping("/deletar_item/{id}")
-    public void deletarItem(Long id) {
+    public void deletarItem(@PathVariable Long id) {
         itemServico.deletarItem(id);
         
     

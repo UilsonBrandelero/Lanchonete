@@ -10,6 +10,9 @@ import com.example.Lanchonete.modelo.Pedido;
 
 public interface PedidoRepositorio extends JpaRepository<Pedido, Long> {
 
-    @Query(value = "SELECT p  FROM pedido p WHERE p.status_pedido = :status", nativeQuery=true)
+    @Query(value = "SELECT * FROM pedido p WHERE p.status_pedido = :status", nativeQuery=true)
     List<Pedido> listarPedidosPorStatus(@Param("status") char status);
+
+    @Query(value = "SELECT * FROM pedido p WHERE p.id_cliente = :idCliente", nativeQuery=true)
+    List<Pedido> listarPedidosPorCliente(@Param("idCliente") Long idCliente);
 }

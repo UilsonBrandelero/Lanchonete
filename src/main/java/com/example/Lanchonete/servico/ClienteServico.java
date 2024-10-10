@@ -28,6 +28,10 @@ public class ClienteServico {
         return clienteRepositorio.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
     }
+    public Cliente editarCliente(Cliente clienteEditado, Long idCliente){
+        clienteEditado.setId(idCliente);
+        return clienteRepositorio.save(clienteEditado);
+    }
 
     public Cliente deletrCliente(Long id) {
         Cliente cliente = clienteRepositorio.findById(id)

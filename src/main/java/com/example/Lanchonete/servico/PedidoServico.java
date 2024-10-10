@@ -11,6 +11,8 @@ import com.example.Lanchonete.repositorio.ClienteRepositorio;
 import com.example.Lanchonete.repositorio.ItemRepositorio;
 import com.example.Lanchonete.repositorio.PedidoRepositorio;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class PedidoServico {
 
@@ -24,29 +26,24 @@ public class PedidoServico {
         this.pedidoRepositorio = pedidoRepositorio;
     }
 
-    public Pedido realizarPedido(List<Long> idItens, Long idCliente, List<Integer> quantidadePedida) {
-        List<Item> itensPedidos = null;
+    public Pedido realizarPedido(Long idCliente, Long idItem, int quantidade) {
         Cliente cliente = clienteRepositorio.findById(idCliente)
-                .orElseThrow(() -> new IllegalArgumentException("Cliente nao encontrado"));
-        for (Long id : idItens) {
-            Item item = itemRepositorio.findById(id)
-                    .orElseThrow(() -> new IllegalArgumentException("Item não encontrado"));
-            if (item.getQuantidadeEstoque() >= item.getQuantidadePedida()) {
-                
-                itensPedidos.add(item);
+                .orElseThrow(() -> new EntityNotFoundException("Erro ao buscar Cliente"));
 
-            }else{
-                System.out.println("Qunatidade em estoque não suficiente");
-            }
-        }
-        if(itensPedidos!= null){
+        Item item = itemRepositorio.findById(idItem)
+                .orElseThrow(() -> new EntityNotFoundException("Erro ao buscar Item"));
+
+        if (quantidade <= item.getQuantidadeEstoque()) {
             Pedido pedido = new Pedido();
             pedido.setCliente(cliente);
-            pedido.setItensPedidos(itensPedidos);
-
+            pedido.setItemPedido(item);
+            pedido.setQuantidade(quantidade);
+            pedido.setStatusPedido('A');
+            item .setQuantidadeEstoque(item.getQuantidadeEstoque() - quantidade);
+            itemRepositorio.save(item);
             return pedidoRepositorio.save(pedido);
         }else{
-            System.out.println("Erro ao realizar pedido");
+            System.out.println("Quantidade em estoque insuficiente");
             return null;
         }
 
@@ -58,6 +55,22 @@ public class PedidoServico {
 
     public List<Pedido> listarPedidosPorStatus(char status) { //A para Pedido ABERTO F para Pedido ENCERRADO
         return pedidoRepositorio.listarPedidosPorStatus(status);
+    }
+
+    public Pedido alterarStatusPedido(Long idPedido, char statusPedido) {
+        Pedido pedido = pedidoRepositorio.findById(idPedido)
+                .orElseThrow(() -> new EntityNotFoundException("Erro ao buscar Pedido"));
+        if (pedido != null) {
+            pedido.setStatusPedido(statusPedido);
+            return pedidoRepositorio.save(pedido);
+
+        } else {
+            return null;
+        }
+    }
+
+    public List<Pedido> listarPedidosPorCliente(Long idCLiente) {
+        return pedidoRepositorio.listarPedidosPorCliente(idCLiente);
     }
 
 }
